@@ -32,8 +32,23 @@
     <h2>Explore</h2>
     <code>curl &quot;<span class="location"></span>rest/todos?select=id,todo&quot;</code>
 
+    <h2>Swagger</h2>
+    The Swagger utility is reachable via <a href"http://localhost:8081/">http://localhost:8081/</a>.
+    <p>
+      The default role anonymous just allows <code>select id, todo from todos</code>, thus not even <code>select * from todos</code>.
+    </p>
+    <p>
+      In order to get full access to todos (full select, insert, update and delete), you must be authorized.
+    </p>
+    <p>
+      To do this, click on the "Authorize" button, fill in the JWT shown below, click on the second "Authorize" button and then click "Close".
+    </p>
+    <code>Bearer&nbsp;eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoid2VidXNlciJ9.CRBXN21HRXMk2BiC7rMNQzrOQWZWpI_KNHtXlZ8lc08</code>
+    <p>You may want to go to <a href="https://jwt.io" >https://jwt.io</a> for more explanation about JWTs. The JWT secret is stored in the <code>.env</code> file.</p>
 
     <h2>pgAdmin</h2>
+    The pgAdmin utility is reachable via <a href"http://localhost:8082/">http://localhost:8082/</a>.
+    
     <p>To access the database started by Docker Compose you need to know the IP address.</p>
     <p>
       This Docker Compose setup has assigned static IP addresses to all the services and the local PostgreSQL database has IP address 172.25.0.2.
