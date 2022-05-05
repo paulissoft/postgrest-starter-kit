@@ -1,4 +1,4 @@
-version: '2'
+version: '3'
 services:
 
   ### DB START
@@ -107,3 +107,28 @@ services:
       - RABBITMQ_DEFAULT_USER=${RABBITMQ_DEFAULT_USER}
       - RABBITMQ_DEFAULT_PASS=${RABBITMQ_DEFAULT_PASS}
 
+  swagger:
+    image: swaggerapi/swagger-ui
+    ports:
+      - "8081:8080"
+    expose:
+      - "8081"
+    depends_on: 
+      - openresty
+    environment:
+      API_URL: http://localhost:8080/rest/
+
+  pgadmin:
+    image: dpage/pgadmin4
+    ports:
+      - "8082:80"
+    expose:
+      - "8082"
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD}
+    volumes:
+      - pgadmin-data:/var/lib/pgadmin
+
+volumes:
+  pgadmin-data:

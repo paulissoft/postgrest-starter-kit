@@ -92,7 +92,7 @@ The API server will become available at the following endpoints:
 Try a simple request
 
 ```bash
-curl http://localhost:8080/rest/todos?select=id,todo
+curl "http://localhost:8080/rest/todos?select=id,todo"
 ```
 
 ## Development workflow and debugging

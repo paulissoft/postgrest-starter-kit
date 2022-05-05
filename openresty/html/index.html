@@ -30,8 +30,20 @@
 
 
     <h2>Explore</h2>
-    <code>curl <span class="location"></span>rest/todos?select=id,todo</code>
+    <code>curl &quot;<span class="location"></span>rest/todos?select=id,todo&quot;</code>
 
+
+    <h2>pgAdmin</h2>
+    <p>To access the database started by Docker Compose you need to know the IP address.</p>
+    <p>First you need to have the container ID that you can get by running this command:</p>
+
+    <code>docker ps</code>
+    <p>Next run this command to get the IP address:</p>
+
+    <code>docker inspect &lt;container id&gt; | grep IPAddress</code>
+
+    <p>Use this IP address for the Host name/address in pgAdmin.</p>
+    
     <h2>Support and Documentation</h2>
     <ul>
     <li><a href="http://docs.subzero.cloud">subZero Documentation</a></li>
