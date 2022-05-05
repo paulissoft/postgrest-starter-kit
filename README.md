@@ -4,6 +4,7 @@ Base project and tooling for authoring REST API backends with [PostgREST](https:
 
 ![PostgREST Starter Kit](https://raw.githubusercontent.com/wiki/subzerocloud/postgrest-starter-kit/images/postgrest-starter-kit.gif "PostgREST Starter Kit")
 
+In order to use an external database a dedicated Docker image needs to be made that mimics the entrypoint behaviour of the [official PostgreSQL Docker image](https://github.com/docker-library/postgres.git) but does not create and run a database.
 
 ## Purpose
 

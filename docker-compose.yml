@@ -83,7 +83,7 @@ services:
   # pg-amqp-bridge instance is responsible for forwarding NOTIFY events in PostgreSQL
   # to RabbitMQ based on the BRIDGE_CHANNELS configuration
   pg_amqp_bridge:
-    image: subzerocloud/pg-amqp-bridge
+    image: kibatic/pg-amqp-bridge
     links:
       - db
       - rabbitmq
