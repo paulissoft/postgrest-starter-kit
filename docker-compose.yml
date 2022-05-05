@@ -25,9 +25,11 @@ services:
       - DB_ANON_ROLE=${DB_ANON_ROLE}
       - DEVELOPMENT=${DEVELOPMENT}
       - JWT_SECRET=${JWT_SECRET}
-
     volumes:
       - "./db/src:/docker-entrypoint-initdb.d"
+    networks:
+      frontapp:
+        ipv4_address: 172.25.0.2
   ### DB END
 
   # PostgREST instance, is responsible for communicating with the database
@@ -47,6 +49,9 @@ services:
       - PGRST_MAX_ROWS=${MAX_ROWS} 
       - PGRST_PRE_REQUEST=${PRE_REQUEST}
       - PGRST_SERVER_PROXY_URI=${SERVER_PROXY_URI}
+    networks:
+      frontapp:
+        ipv4_address: 172.25.0.3
     depends_on:
       - db
 
@@ -77,6 +82,9 @@ services:
       - "./openresty/nginx:/usr/local/openresty/nginx/conf"
       - "./openresty/html:/usr/local/openresty/nginx/html"
       - "./openresty/lua:/usr/local/openresty/lualib/user_code"
+    networks:
+      frontapp:
+        ipv4_address: 172.25.0.4
     depends_on:
       - postgrest
 
@@ -92,6 +100,9 @@ services:
       - POSTGRESQL_URI=postgres://${DB_USER}:${DB_PASS}@${DB_HOST}:${DB_PORT}/${DB_NAME}
       - AMQP_URI=amqp://${RABBITMQ_DEFAULT_USER}:${RABBITMQ_DEFAULT_PASS}@rabbitmq//
       - BRIDGE_CHANNELS=events:amq.topic
+    networks:
+      frontapp:
+        ipv4_address: 172.25.0.5
     depends_on:
       - db
 
@@ -106,6 +117,9 @@ services:
     environment:
       - RABBITMQ_DEFAULT_USER=${RABBITMQ_DEFAULT_USER}
       - RABBITMQ_DEFAULT_PASS=${RABBITMQ_DEFAULT_PASS}
+    networks:
+      frontapp:
+        ipv4_address: 172.25.0.6
 
   swagger:
     image: swaggerapi/swagger-ui
@@ -117,6 +131,9 @@ services:
       - openresty
     environment:
       API_URL: http://localhost:8080/rest/
+    networks:
+      frontapp:
+        ipv4_address: 172.25.0.7
 
   pgadmin:
     image: dpage/pgadmin4
@@ -129,6 +146,19 @@ services:
       PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD}
     volumes:
       - pgadmin-data:/var/lib/pgadmin
+    networks:
+      frontapp:
+        ipv4_address: 172.25.0.8
 
 volumes:
   pgadmin-data:
+
+# https://stackoverflow.com/questions/37242217/access-docker-container-from-host-using-containers-name
+networks:
+  frontapp:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.25.0.0/16
+          gateway: 172.25.0.1
